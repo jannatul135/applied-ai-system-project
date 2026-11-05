@@ -1,0 +1,5 @@
+# One tip per line. Keep species words (dog, cat) in each line so search can match them.
+Most adult dogs need about 30 to 60 minutes of exercise or walking each day; puppies and high-energy breeds often need more, small or senior dogs often need less.
+Walk a dog at least once or twice a day, and avoid long walks in the hottest part of the day.
+Cats benefit from 10 to 15 minutes of interactive play once or twice a day to stay active.
+Rabbits need several hours of daily time outside their enclosure to exercise.
