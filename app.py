@@ -1,11 +1,17 @@
 """PawPal+ Streamlit app: the UI layer on top of pawpal_system.py."""
 
+import logging
+
 import streamlit as st
 
+from advisor import advise_schedule, find_plan_warnings
 from pawpal_system import Owner, Pet, Scheduler, Task
 
-st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
-
+logging.basicConfig(
+    filename="pawpal.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+)
 # Streamlit re-runs this file on every click, so keep the Owner in session_state.
 # It is only created the first time the page loads.
 if "owner" not in st.session_state:
@@ -169,10 +175,16 @@ else:
 st.divider()
 
 # ------------------------------------------------------------- Schedule
+logger = logging.getLogger("pawpal")
+
 st.header("Today's Schedule")
 st.caption("Builds a plan from pending tasks, highest priority first, within your available time.")
 
 if st.button("Generate schedule"):
+    st.session_state.plan_generated = True
+    st.session_state.plan_approved = False
+
+if st.session_state.get("plan_generated"):
     schedule = scheduler.generate_schedule()
     if schedule:
         st.success(f"Here's today's plan for {owner.name}.")
@@ -191,5 +203,38 @@ if st.button("Generate schedule"):
         st.info(scheduler.explain_plan())
         if scheduler.detect_conflicts():
             st.warning("Some tasks share a time slot. See the warnings above.")
+        for warning in find_plan_warnings(owner, schedule):
+            st.warning("🐕 " + warning)
+
+        st.subheader("Care tips for today's plan")
+        for advice in advise_schedule(owner, schedule):
+            if advice["tips"]:
+                st.markdown(
+                    f"**{advice['pet']}: {advice['task']}** "
+                    f"(confidence {advice['confidence']:.0%})"
+                )
+                for tip in advice["tips"]:
+                    st.write("- " + tip["text"])
+                if advice["low_confidence"]:
+                    st.caption("⚠️ Moderate confidence match. Double-check with your vet.")
+            else:
+                st.warning(
+                    f"No reliable care guidance found for {advice['pet']}: "
+                    f"{advice['task']}. Ask your vet."
+                )
+
+        st.subheader("Your review")
+        if st.session_state.get("plan_approved"):
+            st.success("✅ Plan approved.")
+        else:
+            c1, c2 = st.columns(2)
+            if c1.button("✅ Approve plan"):
+                st.session_state.plan_approved = True
+                logger.info("Plan APPROVED by user (%d tasks)", len(schedule))
+                st.rerun()
+            if c2.button("❌ Reject plan"):
+                st.session_state.plan_generated = False
+                logger.info("Plan REJECTED by user (%d tasks)", len(schedule))
+                st.rerun()
     else:
         st.warning("Nothing to schedule yet. Add a pet and some tasks first.")
