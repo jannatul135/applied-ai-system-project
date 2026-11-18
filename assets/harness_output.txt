@@ -1,0 +1,12 @@
+PawPal+ reliability harness
+============================================================
+PASS  Dog walk retrieves an exercise tip  (confidence 0.67)
+PASS  Cat feeding retrieves a feeding tip  (confidence 0.67)
+PASS  Bird 'play time' gets no irrelevant tip  (irrelevant matches discarded)
+PASS  Empty task title handled safely  (no crash on empty title)
+PASS  Empty retrieval query handled safely  (empty query returns nothing)
+PASS  Same-time tasks flagged as conflict  (1 conflict found)
+PASS  Walk right after a meal triggers warning  (1 warning (only the 08:20 walk))
+PASS  Schedule respects owner's time budget  (high priority kept, low dropped)
+============================================================
+Result: 8/8 passed | avg retrieval confidence: 0.67

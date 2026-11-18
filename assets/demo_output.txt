@@ -1,0 +1,30 @@
+
+=== Case 1: normal day ===
+Plan:
+  08:00  Mia: Feed breakfast (10 min, medium)
+  09:00  Rex: Morning walk (30 min, high)
+Scheduled 2 of 2 pending tasks (40/120 minutes). Higher-priority tasks are chosen first, then shorter ones, until the owner's time runs out.
+TIPS for Mia: Feed breakfast (confidence 67%)
+   - Adult cats are usually fed two or more small meals a day; always keep fresh water available.
+TIPS for Rex: Morning walk (confidence 67%)
+   - Most adult dogs need about 30 to 60 minutes of exercise or walking each day; puppies and high-energy breeds often need more, small or senior dogs often need less.
+   - Walk a dog at least once or twice a day, and avoid long walks in the hottest part of the day.
+
+=== Case 2: walk right after a meal ===
+Plan:
+  18:00  Rex: Feed dinner (20 min, high)
+  18:20  Rex: Evening walk (30 min, high)
+Scheduled 2 of 2 pending tasks (50/120 minutes). Higher-priority tasks are chosen first, then shorter ones, until the owner's time runs out.
+WARNING: Rex: 'Evening walk' at 18:20 is right after 'Feed dinner'. Avoid heavy exercise or a long walk right after a dog eats a big meal.
+TIPS for Rex: Feed dinner (confidence 67%)
+   - Adult dogs are usually fed twice a day, roughly 8 to 12 hours apart, at consistent times.
+   - Avoid heavy exercise or a long walk right after a dog eats a big meal.
+TIPS for Rex: Evening walk (confidence 67%)
+   - Most adult dogs need about 30 to 60 minutes of exercise or walking each day; puppies and high-energy breeds often need more, small or senior dogs often need less.
+   - Walk a dog at least once or twice a day, and avoid long walks in the hottest part of the day.
+
+=== Case 3: topic not in the knowledge base ===
+Plan:
+  10:00  Kiwi: Play time (15 min, medium)
+Scheduled 1 of 1 pending tasks (15/120 minutes). Higher-priority tasks are chosen first, then shorter ones, until the owner's time runs out.
+NO RELIABLE GUIDANCE for Kiwi: Play time -> ask your vet
