@@ -12,6 +12,13 @@ SAFETY_GAP_MINUTES = 30    # no exercise this soon after a meal
 FEED_WORDS = ("feed", "meal", "breakfast", "dinner", "lunch")
 EXERCISE_WORDS = ("walk", "run", "jog", "exercise", "play")
 
+KNOWN_SPECIES = ("dog", "cat", "rabbit", "bird")
+
+
+def _fits_species(tip_text, species):
+    """Reject tips that are about a different species than this pet."""
+    text = tip_text.lower()
+    return not any(s in text for s in KNOWN_SPECIES if s != species)
 
 def _to_minutes(hhmm):
     hours, minutes = hhmm.split(":")
@@ -35,8 +42,9 @@ def advise_task(task, species):
         if not task.title.strip():
             logger.warning("Task with empty title skipped")
             return result
-        tips = retrieve(f"{species} {task.title}", k=2)
+        tips = retrieve(f"{species} {task.title}", k=4)
         tips = [t for t in tips if t["confidence"] >= MIN_CONFIDENCE]
+        tips = [t for t in tips if _fits_species(t["text"], species)][:2]
         if not tips:
             logger.info("No reliable guidance for %s / %s", species, task.title)
             return result

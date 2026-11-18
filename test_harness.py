@@ -13,6 +13,9 @@ logging.basicConfig(
 
 confidences = []
 
+def case_species_mismatch():
+    advice = advise_task(Task("play", 20, pet_name="Kiwi"), "bird")
+    return not advice["tips"], "bird does not get a cat tip"
 
 def case_dog_walk():
     advice = advise_task(Task("Morning walk", 20, pet_name="Rex"), "dog")
@@ -83,6 +86,7 @@ CASES = [
     ("Same-time tasks flagged as conflict", case_conflict_detection),
     ("Walk right after a meal triggers warning", case_walk_after_meal_warning),
     ("Schedule respects owner's time budget", case_time_budget),
+    ("Bird 'play' does not get a cat-only tip", case_species_mismatch),
 ]
 
 
