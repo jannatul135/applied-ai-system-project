@@ -96,3 +96,15 @@
 
 - What is one important thing you learned about designing systems or working with AI on this project?
     - Planning the classes before coding made everything easier, and AI works best when I give it clear limits and then verify the result. The design decisions were mine, even when the AI wrote the code.
+
+---
+
+## 6. Final Project Update: Applied AI System
+
+**What I built on top of PawPal+.** I added a retrieval-augmented advisor (`retriever.py`, `advisor.py`) that looks up pet-care tips from text files in `knowledge/`, uses them to explain tasks, and checks the plan itself (a warning when a dog's walk comes right after its meal). I also added a human approve/reject step, logging to `pawpal.log`, and a reliability harness with 8 predefined cases.
+
+**How AI collaboration changed.** In Module 2 I used AI mostly to review and implement my own class design. This time I used it to plan a larger extension, and the main lesson was about scope: I kept the scheduler untouched and put the new feature in separate modules, so my original tests still passed and I could test the new part alone. I built two of the four optional stretch features and skipped the rest on purpose.
+
+**What the tests taught me.** The bird task "Play time" first matched an unrelated medication tip because both contain the word "time." That showed me that retrieval can look fine on the cases I expect and still fail on others, so I added a minimum confidence cutoff and a test for it. I also learned that my confidence score (matched words divided by query words) was 0.67 almost everywhere, so it is useful as a cutoff but not as a fine-grained measure.
+
+**What I would improve next.** Use a vet-reviewed knowledge base, match on meaning instead of only shared words, add more safety rules (heat, medication timing), and check overlapping task durations instead of only exact start times.

@@ -9,3 +9,5 @@ __pycache__/
 .venv-2
 .pytest_cache/
 .venv-2/
+._*
+pawpal.log
