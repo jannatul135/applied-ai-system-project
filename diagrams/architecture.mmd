@@ -1,0 +1,15 @@
+flowchart TD
+    U["Owner adds pets and tasks (Streamlit UI)"] --> V{"Input validation"}
+    V -- invalid --> E["Warning shown and logged"]
+    V -- valid --> S["Scheduler: priority and time-budget plan"]
+    S --> A["Advisor"]
+    A <--> R["Retriever: knowledge base text files"]
+    A --> G{"Guardrails: confidence cutoff, species check, meal-then-walk check"}
+    G -- low confidence or wrong species --> N["No guidance found, ask vet"]
+    G -- reliable --> P["Plan, tips and warnings shown"]
+    N --> P
+    P --> H{{"Human review: approve or reject"}}
+    H -- approve --> L["Approved plan logged to pawpal.log"]
+    H -- reject --> S
+    T["test_harness.py"] -.-> A
+    T -.-> S
